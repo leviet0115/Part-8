@@ -1,4 +1,5 @@
 git add .
+
 if [ -z "$1" ] 
 then 
     echo "Need comment"
