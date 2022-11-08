@@ -1,17 +1,10 @@
 import { gql, useQuery } from "@apollo/client";
 
 const Books = ({ books, show }) => {
-  const ALL_BOOKS = gql`
-    query {
-      allBooks {
-        author
-        published
-        title
-      }
-    }
-  `;
-
-  const { loading, error, data } = useQuery(ALL_BOOKS);
+  const { loading, error, data } = useQuery(
+    ALL_BOOKS
+    /*{ pollInterval: 2000 }*/
+  );
 
   if (!show) {
     return null;
@@ -28,7 +21,6 @@ const Books = ({ books, show }) => {
   return (
     <div>
       <h2>books</h2>
-
       <table>
         <tbody>
           <tr>
@@ -48,5 +40,15 @@ const Books = ({ books, show }) => {
     </div>
   );
 };
+
+export const ALL_BOOKS = gql`
+  query {
+    allBooks {
+      author
+      published
+      title
+    }
+  }
+`;
 
 export default Books;

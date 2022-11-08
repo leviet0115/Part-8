@@ -1,17 +1,10 @@
 import { useQuery, gql } from "@apollo/client";
 
 const Authors = ({ show }) => {
-  const ALL_AUTHORS = gql`
-    query {
-      allAuthors {
-        name
-        born
-        bookCount
-      }
-    }
-  `;
-
-  const { loading, error, data } = useQuery(ALL_AUTHORS);
+  const { loading, error, data } = useQuery(
+    ALL_AUTHORS
+    /*{pollInterval: 2000}*/
+  );
   //const authors = data.allAuthors;
   //console.log(authors);
 
@@ -49,5 +42,15 @@ const Authors = ({ show }) => {
     </div>
   );
 };
+
+export const ALL_AUTHORS = gql`
+  query {
+    allAuthors {
+      name
+      born
+      bookCount
+    }
+  }
+`;
 
 export default Authors;
