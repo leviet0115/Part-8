@@ -41,7 +41,7 @@ const Authors = ({ show }) => {
           ))}
         </tbody>
       </table>
-      <AuthorEditor />
+      <AuthorEditor authors={data} />
     </div>
   );
 };
