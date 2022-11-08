@@ -17,8 +17,18 @@ const App = () => {
     }
   `;
 
+  const ALL_BOOKS = gql`
+    query {
+      allBooks {
+        author
+        published
+        title
+      }
+    }
+  `;
+
   const authors = useQuery(ALL_AUTHORS);
-  console.log(authors);
+  const books = useQuery(ALL_BOOKS);
 
   return (
     <div>
@@ -30,7 +40,7 @@ const App = () => {
 
       <Authors show={page === "authors"} authors={authors} />
 
-      <Books show={page === "books"} />
+      <Books show={page === "books"} books={books} />
 
       <NewBook show={page === "add"} />
     </div>
