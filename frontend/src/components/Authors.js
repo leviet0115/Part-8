@@ -1,5 +1,19 @@
-const Authors = ({ authors, show }) => {
-  const { loading, error, data } = authors;
+import { useQuery, gql } from "@apollo/client";
+
+const Authors = ({ show }) => {
+  const ALL_AUTHORS = gql`
+    query {
+      allAuthors {
+        name
+        born
+        bookCount
+      }
+    }
+  `;
+
+  const { loading, error, data } = useQuery(ALL_AUTHORS);
+  //const authors = data.allAuthors;
+  //console.log(authors);
 
   if (!show) {
     return null;
