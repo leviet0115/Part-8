@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { ALL_AUTHORS } from "../query";
+import { ALL_AUTHORS } from "../graphQL/query";
 import AuthorEditor from "./AuthorEditor";
 
 const Authors = ({ show }) => {
