@@ -119,14 +119,11 @@ const resolvers = {
     },
 
     editAuthor: async (root, args) => {
+      const filter = { name: args.name };
+      const data = { born: args.setBornTo };
+      const after = { new: true };
       try {
-        const updatedAuth = await Author.findOneAndUpdate(
-          { name: args.name },
-          {
-            born: Number(args.setBornTo),
-          },
-          { new: true }
-        );
+        const updatedAuth = await Author.findOneAndUpdate(filter, data, after);
         return updatedAuth;
       } catch (error) {
         return error;
