@@ -3,7 +3,7 @@ const uuid = require("uuid");
 const mongoose = require("mongoose");
 const Book = require("./models/book");
 const Author = require("./models/author");
-const { ApolloServer, gql } = require("apollo-server");
+const { ApolloServer, gql, UserInputError } = require("apollo-server");
 const book = require("./models/book");
 
 mongoose
@@ -49,23 +49,6 @@ const typeDefs = gql`
     editAuthor(name: String!, setBornTo: Int!): Author
   }
 `;
-
-/* 
-querry
-
-
-
-
-  type Mutation {
-    addBook(
-      title: String!
-      author: String!
-      published: Int!
-      genres: [String!]!
-    ): Book!
-
-  }
-  */
 
 const resolvers = {
   Query: {
@@ -114,8 +97,12 @@ const resolvers = {
 
       //create a new book
       const bookObj = new Book(book);
-      const newBook = await bookObj.save();
-      return await newBook.populate("author");
+      try {
+        const newBook = await bookObj.save();
+        return await newBook.populate("author");
+      } catch (error) {
+        throw UserInputError(error.message, { invalidArgs: args });
+      }
     },
 
     editAuthor: async (root, args) => {
@@ -126,7 +113,7 @@ const resolvers = {
         const updatedAuth = await Author.findOneAndUpdate(filter, data, after);
         return updatedAuth;
       } catch (error) {
-        return error;
+        throw UserInputError(error.message, { invalidArgs: args });
       }
     },
   },
